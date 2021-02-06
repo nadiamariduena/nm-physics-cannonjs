@@ -220,58 +220,35 @@ class PhysicsTestOneCannon extends Component {
     //
     //
     //
-    //
-    //
-    //
-    //
     //---------------------
-    //   Directional Light
+    //    New Lights
     //---------------------
-    //
+    // lights 1
+    this.light1 = new THREE.SpotLight();
+    this.light1.position.set(2.5, 5, 5);
+    this.light1.angle = Math.PI / 4;
+    this.light1.penumbra = 0.5;
+    this.light1.castShadow = true;
+    this.light1.shadow.mapSize.width = 1024;
+    this.light1.shadow.mapSize.height = 1024;
+    this.light1.shadow.camera.near = 0.5;
+    this.light1.shadow.camera.far = 20;
+    this.scene.add(this.light1);
     // //
-    this.renderer.outputEncoding = THREE.sRGBEncoding;
-    this.renderer.shadowMap.enabled = true;
-    this.renderer.shadowMap.autoUpdate = true;
-    this.renderer.gammaFactor = 2.2;
-
-    const directionalLight = new THREE.DirectionalLight(0xffffff);
-    directionalLight.position.set(5, -1, 100);
-
-    // position as follow , the light comes from x:-1000, comes from: y and the last comes from : z
-    directionalLight.position.set(1000, 1000, 1000);
-    directionalLight.castShadow = true;
-    directionalLight.shadow.camera = new THREE.OrthographicCamera(
-      -100,
-      200,
-      -200,
-      200,
-      0.5,
-      5000
-    );
     // //
-    this.scene.add(directionalLight);
-    // The light points to the flat ground
-    // this.directionalLight.target = this.plane;  //dont add this
+    this.light2 = new THREE.SpotLight();
+    this.light2.position.set(-2.5, 5, 5);
+    this.light2.angle = Math.PI / 4;
+    this.light2.penumbra = 0.5;
+    this.light2.castShadow = true;
+    this.light2.shadow.mapSize.width = 1024;
+    this.light2.shadow.mapSize.height = 1024;
+    this.light2.shadow.camera.near = 0.5;
+    this.light2.shadow.camera.far = 20;
+    this.scene.add(this.light2);
     //
     //
-    //THIS LIGHT IS ON THE BOTTOM
-    //---------------------
-    //     spotLight FF5733
-    //---------------------
     //
-
-    // With the light you can see the colors you added to each geometry in the materials
-    this.spotLight = new THREE.SpotLight(0xffffff, 0.5); //intensity:   0.5);
-    // spotLight.position.set( 0 , 10 , 0 );
-    this.spotLight.position.set(5, -50, 0); //x, y , z   original (5, -50, 0);
-    // (2, 32, 32); with this settings the light will be on the front
-    this.spotLight.castShadow = true;
-    //
-    // this will remove the shadows
-    this.spotLight.visible = true;
-    //
-    this.scene.add(this.spotLight);
-    // //
     //
     //
   };
