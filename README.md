@@ -325,6 +325,10 @@ import cannon from "cannon";
 
 ## ADDING THE FIRST GEOMETRIES
 
+- ITS MOVING LIKE THAT because of the **ORBITS CONTROL**
+
+[<img src="./src/images/firstimpression_.gif"/>]()
+
 ```javascript
 //----------------------------------
 //          MODELS / Mesh
@@ -334,17 +338,75 @@ import cannon from "cannon";
 //
 this.normalMaterial = new THREE.MeshNormalMaterial();
 this.phongMaterial = new THREE.MeshPhongMaterial();
-
+//
+//
+//
+//-----------------
+//  CUBE
+//-----------------
 this.cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
 this.cubeMesh = new THREE.Mesh(this.cubeGeometry, this.normalMaterial);
 this.cubeMesh.position.x = -3;
 this.cubeMesh.position.y = 3;
 this.cubeMesh.castShadow = true;
 this.scene.add(this.cubeMesh);
+//
+//
+//-----------------
+//  SPHERE
+//-----------------
+this.sphereGeometry = new THREE.SphereGeometry();
+this.sphereMesh = new THREE.Mesh(this.sphereGeometry, this.normalMaterial);
+this.sphereMesh.position.x = -1;
+this.sphereMesh.position.y = 3;
+this.sphereMesh.castShadow = true;
+this.scene.add(this.sphereMesh);
+//
+//
+//-----------------
+//  Icosahedron
+//-----------------
+//icosahedron is a polyhedron with 20 faces.
+//
+this.icosahedronGeometry = new THREE.IcosahedronGeometry(1, 0);
+this.icosahedronMesh = new THREE.Mesh(
+  this.icosahedronGeometry,
+  this.normalMaterial
+);
+this.icosahedronMesh.position.x = 1;
+this.icosahedronMesh.position.y = 3;
+this.icosahedronMesh.castShadow = true;
+this.scene.add(this.icosahedronMesh);
+//
+//
+//-----------------
+//  torusKnot
+//-----------------
+//
+this.torusKnotGeometry = new THREE.TorusKnotGeometry();
+this.torusKnotMesh = new THREE.Mesh(
+  this.torusKnotGeometry,
+  this.normalMaterial
+);
+this.torusKnotMesh.position.x = 4;
+this.torusKnotMesh.position.y = 3;
+this.torusKnotMesh.castShadow = true;
+this.scene.add(this.torusKnotMesh);
+//
+//
+//-----------------
+//  PLANE / FLOOR
+//-----------------
+//
+this.planeGeometry = new THREE.PlaneGeometry(25, 25);
+this.planeMesh = new THREE.Mesh(this.planeGeometry, this.phongMaterial);
+this.planeMesh.rotateX(-Math.PI / 2);
+this.planeMesh.receiveShadow = true;
+this.scene.add(this.planeMesh);
+//
+//
 ```
 
 ### PREVIEW
 
-- ITS MOVING LIKE THAT because of the ORBITS CONTROL
-
-[<img src="./src/images/firstimpression_.gif"/>]()
+[<img src="./src/images/geomatries-preview.gif"/>]()
