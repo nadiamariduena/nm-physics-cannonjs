@@ -565,7 +565,11 @@ this.scene.add(this.light2);
 <br>
 <br>
 
-### ADD THE FOLLOWING:
+# 🌈
+
+# PHYSICS with CANNON
+
+#### ADD THE FOLLOWING:
 
 - add the following under the First block of the cube
 
@@ -622,6 +626,7 @@ startAnimationLoop = () => {
   this.renderer.render(this.scene, this.camera);
 };
 ```
+<br>
 
 #### GO UP where the world is (above the geometries)
 
@@ -671,3 +676,4 @@ startAnimationLoop = () => {
 #### RESULTS
 
 [<img src="./src/images/physics_1_position.gif"/>]()
+
