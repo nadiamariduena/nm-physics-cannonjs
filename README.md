@@ -318,3 +318,33 @@ import cannon from "cannon";
 
 [<img src="./src/images/adding-cannonjs-installing-types.gif"/>]()
 
+<br>
+<br>
+
+# 🌈
+
+## ADDING THE FIRST GEOMETRIES
+
+```javascript
+//----------------------------------
+//          MODELS / Mesh
+//----------------------------------
+//
+//
+//
+this.normalMaterial = new THREE.MeshNormalMaterial();
+this.phongMaterial = new THREE.MeshPhongMaterial();
+
+this.cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+this.cubeMesh = new THREE.Mesh(this.cubeGeometry, this.normalMaterial);
+this.cubeMesh.position.x = -3;
+this.cubeMesh.position.y = 3;
+this.cubeMesh.castShadow = true;
+this.scene.add(this.cubeMesh);
+```
+
+### PREVIEW
+
+- ITS MOVING LIKE THAT because of the ORBITS CONTROL
+
+[<img src="./src/images/firstimpression_.gif"/>]()
