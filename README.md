@@ -626,6 +626,7 @@ startAnimationLoop = () => {
   this.renderer.render(this.scene, this.camera);
 };
 ```
+
 <br>
 
 #### GO UP where the world is (above the geometries)
@@ -677,3 +678,55 @@ startAnimationLoop = () => {
 
 [<img src="./src/images/physics_1_position.gif"/>]()
 
+### Lets use the QUATERNION to update the rotation of the cube
+
+```javascript
+// ROTATION
+this.cubeMesh.quaternion.set(
+  this.cubeBody.quaternion.x,
+  this.cubeBody.quaternion.y,
+  this.cubeBody.quaternion.z,
+  this.cubeBody.quaternion.w
+);
+```
+
+<br>
+<br>
+<br>
+
+### 🌈
+
+### LETS add something to stop the cube from falling to oblivion
+
+```javascript
+//-----------------
+//  PLANE / FLOOR
+//-----------------
+//
+this.planeGeometry = new THREE.PlaneGeometry(25, 25);
+this.planeMesh = new THREE.Mesh(this.planeGeometry, this.phongMaterial);
+this.planeMesh.rotateX(-Math.PI / 2);
+this.planeMesh.receiveShadow = true;
+this.scene.add(this.planeMesh);
+//
+//
+//
+//                      NEW **
+// CANNON
+this.planeShape = new CANNON.Plane();
+this.planeBody = new CANNON.Body({ mass: 0 });
+this.planeBody.addShape(this.planeShape);
+this.planeBody.quaternion.setFromAxisAngle(
+  new CANNON.Vec3(1, 0, 0),
+  -Math.PI / 2
+);
+this.world.addBody(this.planeBody);
+```
+
+#### RESULT
+
+- the plane Cannon stops the box
+
+[<img src="./src/images/cannon-box-plane.gif"/>]()
+
+#### TO BE CONTINUED

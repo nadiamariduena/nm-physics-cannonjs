@@ -159,6 +159,8 @@ class PhysicsTestOneCannon extends Component {
     this.cubeMesh.castShadow = true;
     this.scene.add(this.cubeMesh);
     //
+    //
+    // CANNON **
     // world binding the cube above and below, to use the physics in the animation function
     this.cubeShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5));
     this.cubeBody = new CANNON.Body({ mass: 1 });
@@ -226,7 +228,15 @@ class PhysicsTestOneCannon extends Component {
     this.planeMesh.receiveShadow = true;
     this.scene.add(this.planeMesh);
     //
-    //
+    // CANNON **
+    this.planeShape = new CANNON.Plane();
+    this.planeBody = new CANNON.Body({ mass: 0 });
+    this.planeBody.addShape(this.planeShape);
+    this.planeBody.quaternion.setFromAxisAngle(
+      new CANNON.Vec3(1, 0, 0),
+      -Math.PI / 2
+    );
+    this.world.addBody(this.planeBody);
     //
     //
     //
@@ -291,13 +301,27 @@ class PhysicsTestOneCannon extends Component {
     // HERE WE NEED TO update THE WORLD
     this.world.step(this.delta); //DELTA is what will cause the never ending animation
     //
+    //
+    // FALLING CUBE
     // Here you are finally seeing what the "world" is doing
     this.cubeMesh.position.set(
       this.cubeBody.position.x,
       this.cubeBody.position.y,
       this.cubeBody.position.z
     );
+    //
+    // ROTATION
+    this.cubeMesh.quaternion.set(
+      this.cubeBody.quaternion.x,
+      this.cubeBody.quaternion.y,
+      this.cubeBody.quaternion.z,
+      this.cubeBody.quaternion.w
+    );
 
+    //
+    //
+    //
+    //
     this.renderer.render(this.scene, this.camera);
   };
   /*
