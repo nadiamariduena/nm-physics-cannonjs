@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import * as THREE from "three";
-// import { DragControls } from "three/examples/jsm/controls/DragControls";
-//
+import { GUI } from "three/examples/jsm/libs/dat.gui.module.js";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import "cannon/build/cannon.min.js";
+//import "./scss/main.scss";
 //
 const style = {
   height: 600, // we can control scene size by setting container dimensions
 };
 //
 
-class physicsTestOne extends Component {
+class PhysicsTestOneCannon extends Component {
   componentDidMount() {
     // Here you are calling all the functions below
     this.sceneSetup();
@@ -35,6 +37,9 @@ class physicsTestOne extends Component {
 
   */
   sceneSetup = () => {
+    const scene = new THREE.Scene();
+    const axesHelper = new THREE.AxesHelper(5);
+    scene.add(axesHelper);
     //
     //                WIDTH/HEIGHT
     // --------------------------------------------
@@ -105,7 +110,7 @@ class physicsTestOne extends Component {
 
     //
     //---------------------------
-    //    DRAG CONTROLS
+    //     CONTROLS
     //---------------------------
 
     //
@@ -231,4 +236,4 @@ class physicsTestOne extends Component {
   }
 }
 
-export default physicsTestOne;
+export default PhysicsTestOneCannon;

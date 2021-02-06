@@ -1,7 +1,7 @@
 import React from "react";
 
-import Header from "../navigation/Header";
-import PhysicsTestOne from "../3dScenes/PhysicsTestOne";
+// import Header from "../navigation/Header";
+import PhysicsTestOneCannon from "../3dScenes/PhysicsTestOne";
 // import HomePortfolioGallery from "./HomePortfolioGallery";
 // import ContactSection from "./HomeContact";
 // import FooterTextAnimation from "./HomeFooterText";
@@ -27,7 +27,7 @@ function Home() {
             {/* ----------------------------------------- */}
 
             <div className="wrapper-scene-oblivion">
-              <PhysicsTestOne />
+              <PhysicsTestOneCannon />
             </div>
             {/* ----------------------------------------- */}
 
