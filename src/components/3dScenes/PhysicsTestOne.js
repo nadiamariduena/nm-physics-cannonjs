@@ -128,8 +128,8 @@ class PhysicsTestOneCannon extends Component {
     // this.scene.enablePhysics(new Vector3(0, -9.8, 0), this.physicsPlugin);
     //
     //
-    const world = new CANNON.World();
-    world.gravity.set(0, -9.82, 0);
+    this.world = new CANNON.World();
+    this.world.gravity.set(0, -9.82, 0);
     // //world.broadphase = new CANNON.NaiveBroadphase() //
     // //world.solver.iterations = 10
     // //world.allowSleep = true
@@ -158,6 +158,20 @@ class PhysicsTestOneCannon extends Component {
     this.cubeMesh.position.y = 3;
     this.cubeMesh.castShadow = true;
     this.scene.add(this.cubeMesh);
+    //
+    // world binding the cube above and below, to use the physics in the animation function
+    this.cubeShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5));
+    this.cubeBody = new CANNON.Body({ mass: 1 });
+    this.cubeBody.addShape(this.cubeShape);
+    this.cubeBody.position.x = this.cubeMesh.position.x;
+    this.cubeBody.position.y = this.cubeMesh.position.y;
+    this.cubeBody.position.z = this.cubeMesh.position.z;
+    this.world.addBody(this.cubeBody);
+    //
+    //
+    //
+    //
+    //
     //
     //
     //-----------------
@@ -251,6 +265,10 @@ class PhysicsTestOneCannon extends Component {
     //
     //
     //
+    this.clock = new THREE.Clock();
+    //
+    //
+    //
   };
   /*
 
@@ -265,6 +283,20 @@ class PhysicsTestOneCannon extends Component {
     //
 
     this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
+
+    this.controls.update();
+    this.delta = this.clock.getDelta();
+    // if (delta > .1) delta = .1
+    //
+    // HERE WE NEED TO update THE WORLD
+    this.world.step(this.delta); //DELTA is what will cause the never ending animation
+    //
+    // Here you are finally seeing what the "world" is doing
+    this.cubeMesh.position.set(
+      this.cubeBody.position.x,
+      this.cubeBody.position.y,
+      this.cubeBody.position.z
+    );
 
     this.renderer.render(this.scene, this.camera);
   };

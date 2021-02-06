@@ -559,4 +559,115 @@ this.scene.add(this.light2);
 //
 ```
 
-[<img src="./src/images/ replacing-lights2.jpg"/>]()
+[<img src="./src/images/replacing-lights2.jpg"/>]()
+
+<br>
+<br>
+<br>
+
+### ADD THE FOLLOWING:
+
+- add the following under the First block of the cube
+
+```javascript
+this.cubeShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5));
+this.cubeBody = new CANNON.Body({ mass: 1 });
+this.cubeBody.addShape(this.cubeShape);
+this.cubeBody.position.x = this.cubeMesh.position.x;
+this.cubeBody.position.y = this.cubeMesh.position.y;
+this.cubeBody.position.z = this.cubeMesh.position.z;
+world.addBody(this.cubeBody);
+```
+
+- You are not going to see anything as you must to add something in the animation FUNCTION
+
+- **YOU NEED TO "update the World"** TO SEE what s going on
+  <br>
+
+- **BUT BEFORE** add the **"clock"** like we have done in the previous examples
+
+```javascript
+     // JUST BEFORE the end of the:    addCustomSceneObjects = () => {
+    this.clock = new THREE.Clock();
+    //
+    //
+    //
+  };
+
+
+  startAnimationLoop = () => {
+    //
+```
+
+<br>
+
+# 🐖
+
+#### **NOW ADD THE CLOCK inside the animation function**
+
+<br>
+
+- YOU ARE GOING TO HAVE AN **ERROR** HERE 🔴
+
+```javascript
+startAnimationLoop = () => {
+  //
+
+  this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
+
+  this.controls.update();
+  this.delta = this.clock.getDelta(); // HERE *****
+  this.world.step(this.delta); //error **  GO UP where the world is (above the geometries)
+
+  this.renderer.render(this.scene, this.camera);
+};
+```
+
+#### GO UP where the world is (above the geometries)
+
+- **CHANGE** THIS:
+
+```javascript
+// change this:
+
+const world = new CANNON.World();
+world.gravity.set(0, -9.82, 0);
+// //world.broadphase = new CANNON.NaiveBroadphase() //
+// //world.solver.iterations = 10
+// //world.allowSleep = true
+
+// for this:
+
+this.world = new CANNON.World();
+this.world.gravity.set(0, -9.82, 0);
+// //world.broadphase = new CANNON.NaiveBroadphase() //
+// //world.solver.iterations = 10
+// //world.allowSleep = true
+```
+
+#### ADD THE FOLLOWING inside the animation function
+
+- THIS is going to initiate the physics animation
+
+```javascript
+startAnimationLoop = () => {
+  //  All the rest ...
+  //
+  //---------------- NEW ****
+  //
+  // With this, you will finally seei what the "world" is doing.
+  // the normal cube will connect with the cannon cube
+  this.cubeMesh.position.set(
+    this.cubeBody.position.x,
+    this.cubeBody.position.y,
+    this.cubeBody.position.z
+  );
+  // ------------------------
+
+  this.renderer.render(this.scene, this.camera);
+};
+```
+
+#### RESULTS
+
+[<img src="./src/images/physics_1_position.gif"/>]()
