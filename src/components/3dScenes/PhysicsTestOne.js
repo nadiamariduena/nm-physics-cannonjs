@@ -3,6 +3,8 @@ import * as THREE from "three";
 import { GUI } from "three/examples/jsm/libs/dat.gui.module.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import "cannon/build/cannon.min.js";
+import * as CANNON from "cannon";
+import cannon from "cannon";
 //import "./scss/main.scss";
 //
 const style = {
@@ -86,7 +88,13 @@ class PhysicsTestOneCannon extends Component {
 
     //
     //
-
+    //
+    //---------------------------
+    //     CONTROLS
+    //---------------------------
+    // OrbitControls allow a camera to orbit around the object
+    // https://threejs.org/docs/#examples/controls/OrbitControls
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     //
     //
   };
@@ -100,27 +108,48 @@ class PhysicsTestOneCannon extends Component {
 
   */
   addCustomSceneObjects = () => {
-    //
-
-    //
-    //
-
+    // //
+    // this.physicsPlugin = new CannonJSPlugin(true, 10, cannon);
+    // this.scene.enablePhysics(new Vector3(0, -9.8, 0), this.physicsPlugin);
     //
     //
-
+    const world = new CANNON.World();
+    world.gravity.set(0, -9.82, 0);
+    // //world.broadphase = new CANNON.NaiveBroadphase() //
+    // //world.solver.iterations = 10
+    // //world.allowSleep = true
     //
-    //---------------------------
-    //     CONTROLS
-    //---------------------------
-
+    //
     //
     //
 
     //----------------------------------
-    //         BLENDER  MODELS
+    //          MODELS / Mesh
     //----------------------------------
     //
+    //
+    //
+    this.normalMaterial = new THREE.MeshNormalMaterial();
+    this.phongMaterial = new THREE.MeshPhongMaterial();
 
+    this.cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+    this.cubeMesh = new THREE.Mesh(this.cubeGeometry, this.normalMaterial);
+    this.cubeMesh.position.x = -3;
+    this.cubeMesh.position.y = 3;
+    this.cubeMesh.castShadow = true;
+    this.scene.add(this.cubeMesh);
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
     //---------------------
     //   Directional Light
     //---------------------

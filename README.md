@@ -6,7 +6,7 @@
 <br>
 <br>
 
-### INSTALL cannonjs
+### INSTALL cannonjs 🐖
 
 ```javascript
 npm three
@@ -17,7 +17,9 @@ npm install cannon
 <br>
 <br>
 
-# IMPORT IT
+### IMPORT IT ☁️
+
+<br>
 
 #### HOW THE SCENE should look like before we start adding all the OBJECTS
 
@@ -57,10 +59,7 @@ class PhysicsTestOneCannon extends Component {
   }
   /*
 
-
                                             ***  1   ***
-
-
 
   */
   sceneSetup = () => {
@@ -110,13 +109,10 @@ class PhysicsTestOneCannon extends Component {
     this.eleModelBlOne.appendChild(this.renderer.domElement); // mount using React ref
     // document.appendChild(this.renderer.domElement);  //before
     //
-
     //
   };
 
   /*
-
-
                                             ***  2  ***
 
 
@@ -203,10 +199,6 @@ class PhysicsTestOneCannon extends Component {
   /*
 
 
-
-
-
-
   */
   handleWindowResize = () => {
     const width = this.eleModelBlOne.clientWidth;
@@ -220,11 +212,6 @@ class PhysicsTestOneCannon extends Component {
     this.camera.updateProjectionMatrix();
   };
   /*
-
-
-
-
-
 
   */
 
@@ -246,3 +233,88 @@ class PhysicsTestOneCannon extends Component {
 
 export default PhysicsTestOneCannon;
 ```
+
+<br>
+<br>
+<br>
+
+## 🍨
+
+### ADD THE ORBITS CONTROL
+
+```javascript
+//---------------------------
+//     CONTROLS
+//---------------------------
+// OrbitControls allow a camera to orbit around the object
+// https://threejs.org/docs/#examples/controls/OrbitControls
+this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+```
+
+<br>
+<br>
+
+### ADD THE CANNONjs to the scene
+
+- You are going to have an **error** after adding the following: 🔴
+
+```javascript
+const world = new CANNON.World();
+world.gravity.set(0, -9.82, 0);
+// //world.broadphase = new CANNON.NaiveBroadphase() //
+// //world.solver.iterations = 10
+// //world.allowSleep = true
+```
+
+- **The Reason** for that Error is because **you haven't install the _TYPES_**
+
+- In the tutorial I am following, it says I have to create a typescript file, but since i am not working with typescript I might have to find another way.
+
+<br>
+
+# 👾
+
+#### ANOTHER WAY
+
+- _**INSTALL**_ THE TYPES
+
+```javascript
+// https://www.npmjs.com/package/@types/cannon
+ npm install --save @types/cannon
+```
+
+<br>
+
+#### IMPORT IT ☁️
+
+- I added these 3 lines because I still don't know which one will work when i will start building the scene
+
+```javascript
+import "cannon/build/cannon.min.js";
+import * as CANNON from "cannon";
+import cannon from "cannon";
+
+//
+//
+//
+  addCustomSceneObjects = () => {
+
+    const world = new CANNON.World();
+    world.gravity.set(0, -9.82, 0);
+    //
+    //
+    // -----------------
+    // WE DONT NEED THE LINES BELOW (NOT in the moment)
+    // //world.broadphase = new CANNON.NaiveBroadphase() //
+    // //world.solver.iterations = 10
+    // //world.allowSleep = true
+    //
+    //
+```
+
+- The import was succesful if after typing the dot "after" CANNON you can see all these options
+
+<br>
+
+[<img src="./src/images/adding-cannonjs-installing-types.gif"/>]()
+
