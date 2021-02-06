@@ -410,3 +410,54 @@ this.scene.add(this.planeMesh);
 ### PREVIEW
 
 [<img src="./src/images/geomatries-preview.gif"/>]()
+
+<br>
+<br>
+<br>
+<br>
+
+# 🌈
+
+### REMOVING THE PIXILATED SHADOW
+
+<br>
+
+- If you don't add **"THREE.PCFSoftShadowMap"** , you will have the shadow but it will be pixelated and **FUGLY**
+
+```javascript
+//  add this
+this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+//
+```
+
+<br>
+
+### What are the possible shadowMapTypes?
+
+- PCFShadowMap
+- PCFSoftShadowMap
+- PCFBasicShadowMap
+
+```javascript
+THREE.BasicShadowMap = 0;
+THREE.PCFShadowMap = 1;
+THREE.PCFSoftShadowMap = 2;
+```
+
+# 🐖
+
+#### MORE ABOUT THIS:
+
+[SOFT SHADOWS WITH PCF](https://fabiensanglard.net/shadowmappingPCF/)
+<br>
+
+[How to use PCF (SOFT) shadows in three.js?](https://stackoverflow.com/questions/60907801/how-to-use-pcf-soft-shadows-in-three-js)
+<br>
+
+# 🌵
+
+##### Can be interesting
+
+[Three.js - Why is the shadow of these items looking like this?](https://stackoverflow.com/questions/47996510/three-js-why-is-the-shadow-of-these-items-looking-like-this/)
+
+[<img src="./src/images/pixelated-shadow.gif"/>]()

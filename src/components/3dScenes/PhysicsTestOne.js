@@ -86,7 +86,7 @@ class PhysicsTestOneCannon extends Component {
     this.renderer.shadowMap.enabled = true;
     // if you dont add the line below "THREE.PCFSoftShadowMap" you will have the shadow but...
     // BUT the shadow will be pixelated and UGLY
-    // this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     //
     //
     // here you append it to the jsx
