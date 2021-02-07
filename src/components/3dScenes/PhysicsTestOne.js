@@ -300,7 +300,7 @@ class PhysicsTestOneCannon extends Component {
     //          STATS
     //
     this.stats = Stats();
-    this.eleModelBlOne.appendChild(this.stats.dom);
+    document.body.appendChild(this.stats.dom);
     //
     //
     //--------------------------
@@ -312,6 +312,9 @@ class PhysicsTestOneCannon extends Component {
     //          Clock
     //
     this.clock = new THREE.Clock();
+    this.delta = 0;
+    // 30 fps
+    this.interval = 1 / 30;
     //
     //
     //
@@ -330,9 +333,20 @@ class PhysicsTestOneCannon extends Component {
 
     this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
 
+    // this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
+
     this.controls.update();
-    this.delta = this.clock.getDelta();
+    //
+    this.delta += this.clock.getDelta();
     // if (delta > .1) delta = .1
+    //
+    if (this.delta > this.interval) {
+      // The draw or time dependent code are here
+      this.delta = 0.1; //try removing this line :) and
+      this.delta = this.delta % this.interval;
+    }
+    //
+    //
     //
     // HERE WE NEED TO update THE WORLD
     this.world.step(this.delta); //DELTA is what will cause the never ending animation

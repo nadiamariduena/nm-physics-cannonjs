@@ -731,8 +731,12 @@ this.world.addBody(this.planeBody);
 
 <br>
 <br>
+<br>
+<br>
 
-#### Lets add the stats and the Gui panel
+# 🏟️
+
+# Lets add the stats and the Gui panel
 
 - import it
 
@@ -741,7 +745,7 @@ import { GUI } from "three/examples/jsm/libs/dat.gui.module.js";
 import Stats from "three/examples/jsm/libs/stats.module.js";
 ```
 
-#### use it
+## use it
 
 ```javascript
 //--------------------------
@@ -777,6 +781,91 @@ import Stats from "three/examples/jsm/libs/stats.module.js";
 ```
 
 <br>
+ 
+ - check the 2 little boxes on top right and top left of the page
+
+- the stats will tell how many FPS (frames per second) your stuff is taking.
+
+<br>
+
+
+[<img src="./src/images/statsPanel_guiPanel.gif"/>]()
+
+<br>
+
+## FPS
+
+[Limiting framerate in Three.js to increase performance, requestAnimationFrame?](https://stackoverflow.com/questions/11285065/limiting-framerate-in-three-js-to-increase-performance-requestanimationframe)
+
+<br>
+
+[Determining the frame rate for your scene](https://subscription.packtpub.com/book/web_development/9781783981182/1/ch01lvl1sec15/determining-the-frame-rate-for-your-scene)
+
+<br>
+
+[VIDEO |Three.js Tutorial 8 - FPS (Frames Per Second/Framerate)](https://www.youtube.com/watch?v=brPnECREIxs)
+
+<br>
+
+```javascript
+//--------------------------
+    //          STATS
+    //
+    this.stats = Stats();
+    document.body.appendChild(this.stats.dom);
+    //
+    //
+    //--------------------------
+    //          GUI panel
+    //
+    this.gui = new GUI();
+    //
+    //--------------------------
+    //          Clock
+    //
+    this.clock = new THREE.Clock();
+    this.delta = 0;
+    // 30 fps
+    this.interval = 1 / 30;
+    //
+    //
+    //
+  };
+  /*
+
+
+                                            ***  3   ***
+
+
+
+  */
+
+  startAnimationLoop = () => {
+    //
+
+    this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
+
+    // this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
+
+    this.controls.update();
+    //
+    this.delta += this.clock.getDelta();
+    // if (delta > .1) delta = .1
+    //
+    if (this.delta > this.interval) {
+      // The draw or time dependent code are here
+      this.delta = 0.1; //try removing this line :)
+      this.delta = this.delta % this.interval;
+    }
+    //
+    //
+    //
+    // HERE WE NEED TO update THE WORLD
+    this.world.step(this.delta); //DELTA is what will cause the never ending animation
+    //
+    //---------------------------
+```
+
 <br>
 <br>
 
@@ -853,7 +942,7 @@ import Stats from "three/examples/jsm/libs/stats.module.js";
     //          STATS
     //
     this.stats = Stats();
-    this.eleModelBlOne.appendChild(this.stats.dom);
+     document.body.appendChild(this.stats.dom);
     //
     //
     //--------------------------
