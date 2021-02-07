@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import * as THREE from "three";
 import { GUI } from "three/examples/jsm/libs/dat.gui.module.js";
+import Stats from "three/examples/jsm/libs/stats.module.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import "cannon/build/cannon.min.js";
 import * as CANNON from "cannon";
@@ -152,6 +153,7 @@ class PhysicsTestOneCannon extends Component {
     //-----------------
     //  CUBE
     //-----------------
+    // a
     this.cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
     this.cubeMesh = new THREE.Mesh(this.cubeGeometry, this.normalMaterial);
     this.cubeMesh.position.x = -3;
@@ -159,11 +161,13 @@ class PhysicsTestOneCannon extends Component {
     this.cubeMesh.castShadow = true;
     this.scene.add(this.cubeMesh);
     //
-    //
-    // CANNON **
+    //b
+    // Cube CANNON **
     // world binding the cube above and below, to use the physics in the animation function
     this.cubeShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5));
     this.cubeBody = new CANNON.Body({ mass: 1 });
+    // mass 1 means its going to be affected by gravity, if you add 2, it will twice as heavy
+    // Keep in mind the the positioning of the CUBE Cannon is related to the positioning of the CUBE threejs (above)
     this.cubeBody.addShape(this.cubeShape);
     this.cubeBody.position.x = this.cubeMesh.position.x;
     this.cubeBody.position.y = this.cubeMesh.position.y;
@@ -185,6 +189,22 @@ class PhysicsTestOneCannon extends Component {
     this.sphereMesh.position.y = 3;
     this.sphereMesh.castShadow = true;
     this.scene.add(this.sphereMesh);
+    //
+    //
+    //  Sphere CANNON **
+    //
+    this.sphereShape = new CANNON.Sphere(1);
+    this.sphereBody = new CANNON.Body({ mass: 1 }); //If you add 0, its not going to FALL, because its not affected by Gravity
+    // mass 1 means its going to be affected by gravity, if you add 2, it will twice as heavy
+    // Keep in mind the the positioning of the sphere Cannon is related to the positioning of the sphere threejs
+    this.sphereBody.addShape(this.sphereShape);
+    this.sphereBody.position.x = this.sphereMesh.position.x;
+    this.sphereBody.position.y = this.sphereMesh.position.y;
+    this.sphereBody.position.z = this.sphereMesh.position.z;
+    this.world.addBody(this.sphereBody);
+    //
+
+    //
     //
     //
     //-----------------
@@ -228,10 +248,13 @@ class PhysicsTestOneCannon extends Component {
     this.planeMesh.receiveShadow = true;
     this.scene.add(this.planeMesh);
     //
-    // CANNON **
-    this.planeShape = new CANNON.Plane();
-    this.planeBody = new CANNON.Body({ mass: 0 });
+    // plane CANNON **
+    this.planeShape = new CANNON.Plane(); //the plane in cannnon goes to infinity
+    this.planeBody = new CANNON.Body({ mass: 0 }); //when the mass is at 0, it means it s not going to be affected by Gravity
+    // mass 1 means its going to be affected by gravity, if you add 2, it will twice as heavy
     this.planeBody.addShape(this.planeShape);
+    //
+    //this line here is equivalent to this line from the threejs plane:   this.planeMesh.rotateX(-Math.PI / 2);
     this.planeBody.quaternion.setFromAxisAngle(
       new CANNON.Vec3(1, 0, 0),
       -Math.PI / 2
@@ -273,7 +296,20 @@ class PhysicsTestOneCannon extends Component {
     //
     //
     //
+    //--------------------------
+    //          STATS
     //
+    this.stats = Stats();
+    this.eleModelBlOne.appendChild(this.stats.dom);
+    //
+    //
+    //--------------------------
+    //          GUI panel
+    //
+    this.gui = new GUI();
+    //
+    //--------------------------
+    //          Clock
     //
     this.clock = new THREE.Clock();
     //
@@ -301,26 +337,46 @@ class PhysicsTestOneCannon extends Component {
     // HERE WE NEED TO update THE WORLD
     this.world.step(this.delta); //DELTA is what will cause the never ending animation
     //
+    //---------------------------
+    // The following is going to  Copy coordinates from Cannon.js to Three.js
+    //
+    //
     //
     // FALLING CUBE
     // Here you are finally seeing what the "world" is doing
+    // c
     this.cubeMesh.position.set(
       this.cubeBody.position.x,
       this.cubeBody.position.y,
       this.cubeBody.position.z
     );
-    //
-    // ROTATION
+    // rotation
     this.cubeMesh.quaternion.set(
       this.cubeBody.quaternion.x,
       this.cubeBody.quaternion.y,
       this.cubeBody.quaternion.z,
       this.cubeBody.quaternion.w
     );
-
+    //
+    //
+    // SPHERE CANNON
+    this.sphereMesh.position.set(
+      this.sphereBody.position.x,
+      this.sphereBody.position.y,
+      this.sphereBody.position.z
+    );
+    this.sphereMesh.quaternion.set(
+      this.sphereBody.quaternion.x,
+      this.sphereBody.quaternion.y,
+      this.sphereBody.quaternion.z,
+      this.sphereBody.quaternion.w
+    );
+    //---------------------------
     //
     //
     //
+    //
+    this.stats.update();
     //
     this.renderer.render(this.scene, this.camera);
   };

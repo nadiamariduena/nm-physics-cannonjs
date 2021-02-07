@@ -729,4 +729,205 @@ this.world.addBody(this.planeBody);
 
 [<img src="./src/images/cannon-box-plane.gif"/>]()
 
-#### TO BE CONTINUED
+<br>
+<br>
+
+#### Lets add the stats and the Gui panel
+
+- import it
+
+```javascript
+import { GUI } from "three/examples/jsm/libs/dat.gui.module.js";
+import Stats from "three/examples/jsm/libs/stats.module.js";
+```
+
+#### use it
+
+```javascript
+//--------------------------
+    //          STATS
+    //
+    this.stats = Stats();
+    this.eleModelBlOne.appendChild(this.stats.dom);
+    //
+    //
+    //--------------------------
+    //          GUI panel
+    //
+    this.gui = new GUI();
+    //
+    //--------------------------
+    //          Clock
+    //
+    this.clock = new THREE.Clock();
+    //
+    //
+    //
+  };
+    //  3
+
+  startAnimationLoop = () => {
+    //
+    this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
+    //  STATS **
+    this.stats.update();
+    //
+    this.renderer.render(this.scene, this.camera);
+  };
+```
+
+<br>
+<br>
+<br>
+
+# 🌈 ☁️ 🐄
+
+### UPDATE THE OTHER RELEVANT CANNON GEOMETRIES (sphere and plane)
+
+##### THE MASS CANNON.Body({ mass: 1 })
+
+<br>
+
+- **If you add 0**, its not going to FALL, because its not affected by Gravity.
+
+- **Mass 1** means its going to be affected by gravity, if you add **Mass 2**, it will twice as heavy.
+
+<br>
+
+##### Positioning
+
+- Keep in mind the the positioning of the sphere Cannon is related to the positioning of the sphere threejs
+
+```javascript
+  //-----------------
+    //  SPHERE
+    //-----------------
+    this.sphereGeometry = new THREE.SphereGeometry();
+    this.sphereMesh = new THREE.Mesh(this.sphereGeometry, this.normalMaterial);
+    this.sphereMesh.position.x = -1;
+    this.sphereMesh.position.y = 3;
+    this.sphereMesh.castShadow = true;
+    this.scene.add(this.sphereMesh);
+    //
+    //
+    //  Sphere CANNON **
+    //
+    this.sphereShape = new CANNON.Sphere(1);
+    this.sphereBody = new CANNON.Body({ mass: 1 }); //If you add 0, its not going to FALL, because its not affected by Gravity
+    // mass 1 means its going to be affected by gravity, if you add 2, it will twice as heavy
+    // Keep in mind the the positioning of the sphere Cannon is related to the positioning of the sphere threejs
+    this.sphereBody.addShape(this.sphereShape);
+    this.sphereBody.position.x = this.sphereMesh.position.x;
+    this.sphereBody.position.y = this.sphereMesh.position.y;
+    this.sphereBody.position.z = this.sphereMesh.position.z;
+    this.world.addBody(this.sphereBody);
+    //
+
+
+    //-----------------
+    //  PLANE / FLOOR
+    //-----------------
+    //
+    this.planeGeometry = new THREE.PlaneGeometry(25, 25);
+    this.planeMesh = new THREE.Mesh(this.planeGeometry, this.phongMaterial);
+    this.planeMesh.rotateX(-Math.PI / 2);
+    this.planeMesh.receiveShadow = true;
+    this.scene.add(this.planeMesh);
+    //
+    // plane CANNON **
+    this.planeShape = new CANNON.Plane(); //the plane in cannnon goes to infinity
+    this.planeBody = new CANNON.Body({ mass: 0 }); //when the mass is at 0, it means it s not going to be affected by Gravity
+    // mass 1 means its going to be affected by gravity, if you add 2, it will twice as heavy
+    this.planeBody.addShape(this.planeShape);
+    //
+    //this line here is equivalent to this line from the threejs plane:   this.planeMesh.rotateX(-Math.PI / 2);
+    this.planeBody.quaternion.setFromAxisAngle(
+      new CANNON.Vec3(1, 0, 0),
+      -Math.PI / 2
+    );
+    this.world.addBody(this.planeBody);
+    //
+    //
+
+    //--------------------------
+    //          STATS
+    //
+    this.stats = Stats();
+    this.eleModelBlOne.appendChild(this.stats.dom);
+    //
+    //
+    //--------------------------
+    //          GUI panel
+    //
+    this.gui = new GUI();
+    //
+    //--------------------------
+    //          Clock
+    //
+    this.clock = new THREE.Clock();
+    //
+    //
+    //
+  };
+  /*
+
+                                            ***  3   ***
+  */
+
+  startAnimationLoop = () => {
+    /
+    this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
+
+    this.controls.update();
+    this.delta = this.clock.getDelta();
+    // if (delta > .1) delta = .1
+    //
+    // HERE WE NEED TO update THE WORLD
+    this.world.step(this.delta); //DELTA is what will cause the never ending animation
+    //
+    //---------------------------
+    // The following is going to  Copy coordinates from Cannon.js to Three.js
+    //
+    // FALLING CUBE
+    // Here you are finally seeing what the "world" is doing
+    // c
+    this.cubeMesh.position.set(
+      this.cubeBody.position.x,
+      this.cubeBody.position.y,
+      this.cubeBody.position.z
+    );
+    // rotation
+    this.cubeMesh.quaternion.set(
+      this.cubeBody.quaternion.x,
+      this.cubeBody.quaternion.y,
+      this.cubeBody.quaternion.z,
+      this.cubeBody.quaternion.w
+    );
+    //
+    // ------ *
+    //
+    // SPHERE CANNON
+    this.sphereMesh.position.set(
+      this.sphereBody.position.x,
+      this.sphereBody.position.y,
+      this.sphereBody.position.z
+    );
+    this.sphereMesh.quaternion.set(
+      this.sphereBody.quaternion.x,
+      this.sphereBody.quaternion.y,
+      this.sphereBody.quaternion.z,
+      this.sphereBody.quaternion.w
+    );
+    //
+    // ------ *
+    //
+    //---------------------------
+    //
+    //
+    //
+    //
+    this.stats.update();
+    //
+    this.renderer.render(this.scene, this.camera);
+  };
+```
