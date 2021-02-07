@@ -193,7 +193,7 @@ class PhysicsTestOneCannon extends Component {
     //
     //  Sphere CANNON **
     //
-    this.sphereShape = new CANNON.Sphere(1);
+    this.sphereShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5)); //new CANNON.sphere(1)
     this.sphereBody = new CANNON.Body({ mass: 1 }); //If you add 0, its not going to FALL, because its not affected by Gravity
     // mass 1 means its going to be affected by gravity, if you add 2, it will twice as heavy
     // Keep in mind the the positioning of the sphere Cannon is related to the positioning of the sphere threejs

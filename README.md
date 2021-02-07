@@ -788,7 +788,6 @@ import Stats from "three/examples/jsm/libs/stats.module.js";
 
 <br>
 
-
 [<img src="./src/images/statsPanel_guiPanel.gif"/>]()
 
 <br>
@@ -1019,4 +1018,35 @@ import Stats from "three/examples/jsm/libs/stats.module.js";
     //
     this.renderer.render(this.scene, this.camera);
   };
+```
+
+<br>
+<br>
+
+## CHANGING THE SPHERE SHAPE TO A CUBE?
+
+- APPARENTLY Its a common practice in 3D Games to give different shapes to geometries that are (computational expensive to process), like for example torusKnot, they use lots of it and can overload the fps.
+
+- **SO WHAT WE ARE GOING TO DO**, is to draw a sphere with threejs to make the Physics World think its a Cube.
+
+<br>
+
+👾
+
+#### COPY THE CUBE SHAPE from cannon
+
+```javascript
+//b
+// Cube CANNON **
+this.cubeShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5));
+```
+
+👾
+
+#### and paste it (inside the sphere cannon)
+
+```javascript
+//b
+// Cube CANNON **
+this.sphereShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5)); //new CANNON.sphere(1)
 ```
