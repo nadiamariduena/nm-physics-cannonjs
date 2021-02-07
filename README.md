@@ -1050,3 +1050,36 @@ this.cubeShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5));
 // Cube CANNON **
 this.sphereShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5)); //new CANNON.sphere(1)
 ```
+
+<br>
+
+#### SO AS I SAID ...
+
+##### it s common in 3d games, the appearance of an object doesn't match the physics world version of an object, because for example objects like the "torusKnot" are very computational expensive to process.
+
+<br>
+<br>
+<br>
+
+# 🌈
+
+### LETS ADD SOME GRAVITY CONTROLS (gui panel)
+
+- add THE FOLLOWING under the stats (before the animation function)
+
+```javascript
+const gui = new GUI();
+const physicsFolder = gui.addFolder("Physics");
+physicsFolder.add(world.gravity, "x", -10.0, 10.0, 0.1);
+physicsFolder.add(world.gravity, "y", -10.0, 10.0, 0.1);
+physicsFolder.add(world.gravity, "z", -10.0, 10.0, 0.1);
+physicsFolder.open();
+```
+
+## DONE !!!
+
+[<img src="./src/images/guiPanel-gravity-control.gif"/>]()
+
+#### COMMON PROBLEMS
+
+- I couldnt make it with the Torus knot, I think its because the person who created this tutorial added a file using typescript and of course i cannot use, unless it was something else. but i will ask him.

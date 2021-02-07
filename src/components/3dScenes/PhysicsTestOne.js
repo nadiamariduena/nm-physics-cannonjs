@@ -203,7 +203,6 @@ class PhysicsTestOneCannon extends Component {
     this.sphereBody.position.z = this.sphereMesh.position.z;
     this.world.addBody(this.sphereBody);
     //
-
     //
     //
     //
@@ -223,19 +222,105 @@ class PhysicsTestOneCannon extends Component {
     this.scene.add(this.icosahedronMesh);
     //
     //
+    //
+    //  Icosahedron CANNON
+    //
+    let position = this.icosahedronMesh.geometry.attributes.position.array;
+    this.icosahedronPoints = [];
+    for (let i = 0; i < position.length; i += 3) {
+      this.icosahedronPoints.push(
+        new CANNON.Vec3(position[i], position[i + 1], position[i + 2])
+      );
+    }
+    this.icosahedronFaces = [];
+    for (let i = 0; i < position.length / 3; i += 3) {
+      this.icosahedronFaces.push([i, i + 1, i + 2]);
+    }
+    //
+    this.icosahedronShape = new CANNON.ConvexPolyhedron(
+      this.icosahedronPoints,
+      this.icosahedronFaces
+    );
+    this.icosahedronBody = new CANNON.Body({ mass: 1 });
+    this.icosahedronBody.addShape(this.icosahedronShape);
+    this.icosahedronBody.position.x = this.icosahedronMesh.position.x;
+    this.icosahedronBody.position.y = this.icosahedronMesh.position.y;
+    this.icosahedronBody.position.z = this.icosahedronMesh.position.z;
+    this.world.addBody(this.icosahedronBody);
+    //
+    //
+    //
+    //
+    //
+    //
+
     //-----------------
     //  torusKnot
     //-----------------
     //
-    this.torusKnotGeometry = new THREE.TorusKnotGeometry();
-    this.torusKnotMesh = new THREE.Mesh(
-      this.torusKnotGeometry,
-      this.normalMaterial
-    );
-    this.torusKnotMesh.position.x = 4;
-    this.torusKnotMesh.position.y = 3;
-    this.torusKnotMesh.castShadow = true;
-    this.scene.add(this.torusKnotMesh);
+    // this.torusKnotGeometry = new THREE.TorusKnotGeometry();
+    // this.torusKnotMesh = new THREE.Mesh(
+    //   this.torusKnotGeometry,
+    //   this.normalMaterial
+    // );
+    // this.torusKnotMesh.position.x = 4;
+    // this.torusKnotMesh.position.y = 3;
+    // this.torusKnotMesh.castShadow = true;
+    // this.scene.add(this.torusKnotMesh);
+    // //
+    //
+    //   torusKnot CANNON
+    //
+    //  --------- hide
+    // this.torusKnotPoints = [];
+    // for (let i = 0; i < position.length; i += 3) {
+    //   this.torusKnotPoints.push(
+    //     new CANNON.Vec3(position[i], position[i + 1], position[i + 2])
+    //   );
+    // }
+    // this.torusKnotFaces = [];
+    // for (let i = 0; i < position.length / 3; i += 3) {
+    //   this.torusKnotFaces.push([i, i + 1, i + 2]);
+    // }
+    // this.torusKnotShape = new CANNON.ConvexPolyhedron(
+    //   this.torusKnotPoints,
+    //   this.torusKnotFaces
+    // );
+    //
+    //
+    // const torusKnotShape = new CANNON.ConvexPolyhedron(torusKnotPoints, torusKnotFaces)
+
+    //  --------- hide
+    // this.torusKnotShape = CreateTrimesh(this.torusKnotMesh.geometry); //you are changing the shape again like shere /box
+    //
+    //
+    // const torusKnotShape = CreateTrimesh(this.torusKnotMesh.geometry);
+    // const torusKnotBody = new CANNON.Body({ mass: 1 });
+    // torusKnotBody.addShape(torusKnotShape);
+    // torusKnotBody.position.x = this.torusKnotMesh.position.x;
+    // torusKnotBody.position.y = this.torusKnotMesh.position.y;
+    // torusKnotBody.position.z = this.torusKnotMesh.position.z;
+    // this.world.addBody(torusKnotBody);
+
+    // function CreateTrimesh(geometry) {
+    //   if (!geometry.attributes) {
+    //     geometry = new THREE.BufferGeometry().fromGeometry(geometry);
+    //   }
+    //   const vertices = (geometry = new THREE.BufferGeometry()).attributes
+    //     .position.array;
+    //   const indices = Object.keys(vertices).map(Number);
+    //   return new CANNON.Trimesh((vertices = []), indices);
+    // }
+
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
     //
     //
     //-----------------
@@ -307,7 +392,13 @@ class PhysicsTestOneCannon extends Component {
     //          GUI panel
     //
     this.gui = new GUI();
+    this.physicsFolder = this.gui.addFolder("Physics");
+    this.physicsFolder.add(this.world.gravity, "x", -10.0, 10.0, 0.1);
+    this.physicsFolder.add(this.world.gravity, "y", -10.0, 10.0, 0.1);
+    this.physicsFolder.add(this.world.gravity, "z", -10.0, 10.0, 0.1);
+    this.physicsFolder.open();
     //
+
     //--------------------------
     //          Clock
     //
@@ -337,15 +428,18 @@ class PhysicsTestOneCannon extends Component {
 
     this.controls.update();
     //
-    this.delta += this.clock.getDelta();
-    // if (delta > .1) delta = .1
+    this.delta = this.clock.getDelta();
+    if (this.delta > 0.1) this.delta = 0.1;
     //
-    if (this.delta > this.interval) {
-      // The draw or time dependent code are here
-      this.delta = 0.1; //try removing this line :) and
-      this.delta = this.delta % this.interval;
-    }
-    //
+    // --------------
+    // another option
+    // this.delta += this.clock.getDelta();
+    // if (this.delta > this.interval) {
+    //   // The draw or time dependent code are here
+    //   this.delta = 0.1; //try removing this line :) and
+    //   this.delta = this.delta % this.interval;
+    // }
+    //--------------
     //
     //
     // HERE WE NEED TO update THE WORLD
@@ -384,6 +478,20 @@ class PhysicsTestOneCannon extends Component {
       this.sphereBody.quaternion.y,
       this.sphereBody.quaternion.z,
       this.sphereBody.quaternion.w
+    );
+    //
+    //
+    //
+    this.icosahedronMesh.position.set(
+      this.icosahedronBody.position.x,
+      this.icosahedronBody.position.y,
+      this.icosahedronBody.position.z
+    );
+    this.icosahedronMesh.quaternion.set(
+      this.icosahedronBody.quaternion.x,
+      this.icosahedronBody.quaternion.y,
+      this.icosahedronBody.quaternion.z,
+      this.icosahedronBody.quaternion.w
     );
     //---------------------------
     //
