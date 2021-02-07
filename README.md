@@ -1078,7 +1078,11 @@ physicsFolder.open();
 
 ## DONE !!!
 
-[<img src="./src/images/guiPanel-gravity-control.gif"/>]()
+- **(click on the image to see the result)**
+
+# 🐖
+
+[<img src="./src/images/guiPanel-gravity-control.gif"/>](https://nadiamariduena.github.io/nm-physics-cannonjs/)
 
 #### COMMON PROBLEMS
 
