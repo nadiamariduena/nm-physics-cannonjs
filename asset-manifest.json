@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/nm-physics-cannonjs/static/css/main.d30b491f.chunk.css",
+    "main.js": "/nm-physics-cannonjs/static/js/main.b3c0bf88.chunk.js",
+    "main.js.map": "/nm-physics-cannonjs/static/js/main.b3c0bf88.chunk.js.map",
+    "runtime-main.js": "/nm-physics-cannonjs/static/js/runtime-main.cc12364a.js",
+    "runtime-main.js.map": "/nm-physics-cannonjs/static/js/runtime-main.cc12364a.js.map",
+    "static/js/2.73548768.chunk.js": "/nm-physics-cannonjs/static/js/2.73548768.chunk.js",
+    "static/js/2.73548768.chunk.js.map": "/nm-physics-cannonjs/static/js/2.73548768.chunk.js.map",
+    "static/js/3.ae5431d9.chunk.js": "/nm-physics-cannonjs/static/js/3.ae5431d9.chunk.js",
+    "static/js/3.ae5431d9.chunk.js.map": "/nm-physics-cannonjs/static/js/3.ae5431d9.chunk.js.map",
+    "index.html": "/nm-physics-cannonjs/index.html",
+    "static/css/main.d30b491f.chunk.css.map": "/nm-physics-cannonjs/static/css/main.d30b491f.chunk.css.map",
+    "static/js/2.73548768.chunk.js.LICENSE.txt": "/nm-physics-cannonjs/static/js/2.73548768.chunk.js.LICENSE.txt",
+    "static/media/main.scss": "/nm-physics-cannonjs/static/media/Ubuntu-Regular.fbdecfce.ttf"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.cc12364a.js",
+    "static/js/2.73548768.chunk.js",
+    "static/css/main.d30b491f.chunk.css",
+    "static/js/main.b3c0bf88.chunk.js"
+  ]
+}
